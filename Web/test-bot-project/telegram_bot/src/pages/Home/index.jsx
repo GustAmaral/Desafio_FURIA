@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import './style.css'
 
-function App() {
+function Home() {
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.ready();
@@ -23,4 +23,4 @@ function App() {
   );
 }
 
-export default App
+export default Home

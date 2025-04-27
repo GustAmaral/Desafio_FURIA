@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram WebApp</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>Olá, <span id="user"></span>!</h2>
+  <button onclick="enviarDados()">Enviar nome ao bot</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    const nome = tg.initDataUnsafe.user?.first_name || "usuário";
+    document.getElementById("user").textContent = nome;
+
+    function enviarDados() {
+      tg.sendData(`Nome: ${nome}`);
+      tg.close(); // Fecha o WebApp após envio (opcional)
+    }
+
+    tg.expand(); // Expande o WebApp automaticamente
+  </script>
+</body>
+</html>

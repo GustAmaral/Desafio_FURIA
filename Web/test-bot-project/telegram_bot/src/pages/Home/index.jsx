@@ -16,7 +16,7 @@ function Home() {
   }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+    <div className='container'>
       <h1>Olá, Telegram!</h1>
       <button onClick={sendData}>Enviar mensagem para o Bot</button>
     </div>

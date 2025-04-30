@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import './style.css'
+import { Link } from 'react-router-dom'
 
 function Home() {
   useEffect(() => {
@@ -19,6 +20,9 @@ function Home() {
     <div className='container'>
       <h1>Olá, Telegram!</h1>
       <button onClick={sendData}>Enviar mensagem para o Bot</button>
+      <Link to='/about'>
+        <button>Sobre</button>
+      </Link>
     </div>
   );
 }

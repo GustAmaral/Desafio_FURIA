@@ -8,6 +8,7 @@ import {
   query,
   orderBy,
   serverTimestamp,
+  doc, // Importe doc
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
@@ -20,6 +21,8 @@ interface Message {
   text: string;
   timestamp?: any;
 }
+
+const CHAT_GERAL_ID = "chat_geral";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -43,7 +46,10 @@ export default function ChatPage() {
   }, [router]);
 
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("timestamp"));
+    // Referência à subcoleção de mensagens dentro do documento do chat geral
+    const messagesRef = collection(db, "chats", CHAT_GERAL_ID, "messages");
+    const q = query(messagesRef, orderBy("timestamp"));
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(
         snapshot.docs.map((doc) => ({
@@ -59,7 +65,10 @@ export default function ChatPage() {
     const message = input.trim();
     if (!message || !user) return;
     setInput("");
-    await addDoc(collection(db, "messages"), {
+
+    // Referência à subcoleção de mensagens para adicionar o documento
+    const messagesRef = collection(db, "chats", CHAT_GERAL_ID, "messages");
+    await addDoc(messagesRef, {
       name: user.displayName ?? "Anônimo",
       text: message,
       timestamp: serverTimestamp(),
@@ -127,32 +136,6 @@ export default function ChatPage() {
             Enviar
           </button>
         </div>
-
-        {/* Barra de navegação inferior */}
-        { /*<nav className="border-t border-gray-200 pt-2 pb-3 flex justify-around bg-white">
-          {[
-            { route: "/dashboard", base: "home", ext: "svg", alt: "Home" },
-            { route: "/chat", base: "bate_papo", ext: "png", alt: "Chat" },
-            { route: "/ranking", base: "trofeu", ext: "png", alt: "Ranking" },
-            { route: "/settings", base: "config", ext: "svg", alt: "Config" },
-          ].map(({ route, base, ext, alt }) => (
-            <button
-              key={route}
-              onClick={() =>
-                route.startsWith("/") ? router.push(route) : alert("Coming soon")
-              }
-              onMouseEnter={() => setHovered(base)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              <Image
-                src={getIcon(base, route, ext)}
-                alt={alt}
-                width={28}
-                height={28}
-              />
-            </button>
-          ))}
-        </nav> */}
       </footer>
     </main>
   );

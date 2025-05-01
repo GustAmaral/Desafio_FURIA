@@ -1,14 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { auth, provider } from "@/lib/firebase";
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
+	const router = useRouter();
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) router.push("/dashboard");
+		});
+		return unsubscribe;
+	}, [router]);
+
+	const handleGoogleLogin = async () => {
+		try {
+			await signInWithPopup(auth, provider);
+		} catch (error) {
+			console.error("Erro ao fazer login com Google:", error);
+		}
+	};
+
 	return (
-		<main className="flex flex-col items-center justify-center h-screen gap-6 p-4">
+		<main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
 			{/* TÍTULO */}
-			<h1 className="text-4xl font-bold text-center">FURIA</h1>
-			<h2 className="text-2xl font-bold text-center">FAN CHAT</h2>
+			<h1 className="text-4xl font-bold text-center">FAN CHAT</h1>
 
 			{/* LOGO */}
 			<div className="w-42 h-42 relative">
@@ -24,14 +43,17 @@ export default function Home() {
 
 			{/* BOTÕES DE LOGIN */}
 			<div className="flex flex-col gap-3 w-full max-w-xs">
-				<button className="flex items-center justify-center gap-3 bg-white text-black py-2 px-4 rounded-lg font-semibold hover:bg-gray-200 transition">
+				<button
+					onClick={handleGoogleLogin}
+					className="flex items-center justify-center gap-3 bg-neutral-300 text-black py-2 px-4 rounded-lg font-semibold hover:bg-gray-400 transition"
+				>
 					<Image
 						src="/icons/google-logo.svg"
 						alt="Google"
 						width={20}
 						height={20}
 					/>
-					Sign in with Google
+					Fazer login com Google
 				</button>
 
 				<button className="flex items-center justify-center gap-3 bg-[#5865F2] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#4752c4] transition">
@@ -41,10 +63,14 @@ export default function Home() {
 						width={20}
 						height={20}
 					/>
-					Sign in with Discord
+					Fazer login com Discord
 				</button>
 
-				<button className="border border-white flex items-center justify-center gap-3 py-2 px-4 rounded-lg font-semibold hover:bg-black hover:text-white transition">
+				<button
+					onClick={() => router.push("/login")}
+					className="border border-neutral-900 flex items-center justify-center gap-3 py-2 px-4 rounded-lg font-semibold hover:bg-black hover:text-white transition"
+				>
+					{/* Ícone */}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-5 w-5"
@@ -59,14 +85,19 @@ export default function Home() {
 							d="M16 12H8m0 0l4-4m-4 4l4 4"
 						/>
 					</svg>
-					SIGN IN WITH EMAIL
+					Fazer login com E-mail
 				</button>
 			</div>
 
 			{/* LINK DE CADASTRO */}
 			<p className="text-sm text-gray-500">
-				Don't have an account?{" "}
-				<span className="underline cursor-pointer">SIGN UP</span>
+				Não tem conta?{" "}
+				<span
+					className="underline cursor-pointer"
+					onClick={() => router.push("/signup")}
+				>
+					Cadastre-se
+				</span>
 			</p>
 		</main>
 	);

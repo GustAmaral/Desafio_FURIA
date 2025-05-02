@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import React, { useEffect } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { auth, provider } from "@/lib/firebase";
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect } from "react"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { auth, provider } from "@/lib/firebase"
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth"
 
 export default function Home() {
-	const router = useRouter();
+	const router = useRouter()
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) router.push("/dashboard");
-		});
-		return unsubscribe;
-	}, [router]);
+			if (user) router.push("/dashboard")
+		})
+		return unsubscribe
+	}, [router])
 
 	const handleGoogleLogin = async () => {
 		try {
-			await signInWithPopup(auth, provider);
+			await signInWithPopup(auth, provider)
 		} catch (error) {
-			console.error("Erro ao fazer login com Google:", error);
+			console.error("Erro ao fazer login com Google:", error)
 		}
-	};
+	}
 
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
@@ -100,5 +100,5 @@ export default function Home() {
 				</span>
 			</p>
 		</main>
-	);
+	)
 }

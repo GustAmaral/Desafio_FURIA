@@ -1,48 +1,48 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
-import { signOut, onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useEffect, useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import Image from "next/image"
+import { signOut, onAuthStateChanged, User } from "firebase/auth"
+import { auth } from "@/lib/firebase"
 
 export default function DashboardPage() {
-	const router = useRouter();
-	const pathname = usePathname();
-	const [user, setUser] = useState<User | null>(null);
-	const [isLoggingOut, setIsLoggingOut] = useState(false);
+	const router = useRouter()
+	const pathname = usePathname()
+	const [user, setUser] = useState<User | null>(null)
+	const [isLoggingOut, setIsLoggingOut] = useState(false)
 
 	// Estados de hover para os ícones
-	const [hovered, setHovered] = useState<string | null>(null);
+	const [hovered, setHovered] = useState<string | null>(null)
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
-				setUser(user);
+				setUser(user)
 			} else {
 				if (!isLoggingOut) {
-					alert("É necessário fazer o login antes de prosseguir!");
+					alert("É necessário fazer o login antes de prosseguir!")
 				}
-				router.push("/");
+				router.push("/")
 			}
-		});
-		return unsubscribe;
-	}, [router, isLoggingOut]);
+		})
+		return unsubscribe
+	}, [router, isLoggingOut])
 
 	const handleLogout = async () => {
-		setIsLoggingOut(true);
-		await signOut(auth);
-		router.push("/");
-	};
+		setIsLoggingOut(true)
+		await signOut(auth)
+		router.push("/")
+	}
 
 	// Função auxiliar para aplicar estilo ativo
-	const isActive = (path: string) => pathname === path;
+	const isActive = (path: string) => pathname === path
 
 	// Função para decidir qual ícone usar (ativo, hover ou normal)
 	const getIcon = (base: string, route: string, ext = "png") => {
-		if (isActive(route) || hovered === base) return `/icons/${base}_hover.${ext}`;
-		return `/icons/${base}.${ext}`;
-	};
+		if (isActive(route) || hovered === base) return `/icons/${base}_hover.${ext}`
+		return `/icons/${base}.${ext}`
+	}
 
 	return (
 		<main className="p-6 flex flex-col gap-4 items-center pb-20">
@@ -76,7 +76,7 @@ export default function DashboardPage() {
 			<nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 py-3 flex justify-around">
 				{[
 					{ route: "/dashboard", base: "home", ext: "svg", alt: "Home" },
-					{ route: "/chat", base: "bate_papo", ext: "png", alt: "Chat" },
+					{ route: "/chat/select", base: "bate_papo", ext: "png", alt: "Chat" },
 					{ route: "/ranking", base: "trofeu", ext: "png", alt: "Ranking" },
 					{ route: "/settings", base: "config", ext: "svg", alt: "Config" },
 				].map(({ route, base, ext, alt }) => (
@@ -96,5 +96,5 @@ export default function DashboardPage() {
 				))}
 			</nav>
 		</main>
-	);
+	)
 }

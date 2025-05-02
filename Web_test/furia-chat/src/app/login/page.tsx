@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
+import { auth } from "@/lib/firebase"
 
 export default function EmailLogin() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) router.push("/dashboard");
-    });
-    return unsubscribe;
-  }, [router]);
+      if (user) router.push("/dashboard")
+    })
+    return unsubscribe
+  }, [router])
 
   const handleLogin = async () => {
-    setError("");
+    setError("")
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password)
     } catch (err: any) {
-      setError("Email ou senha inválidos.");
+      setError("Email ou senha inválidos.")
     }
-  };
+  }
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
@@ -71,5 +71,5 @@ export default function EmailLogin() {
         </button>
       </div>
     </main>
-  );
+  )
 }

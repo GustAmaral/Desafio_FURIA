@@ -1,28 +1,30 @@
-"use client"
+"use client";
 
-import React, { useEffect } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { auth, provider } from "@/lib/firebase"
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth"
+import React, { useEffect } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { auth, provider } from "@/lib/firebase";
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
-	const router = useRouter()
+	const router = useRouter();
+	const discordClientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID!;
+	const discordRedirectUri = process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI!;
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) router.push("/dashboard")
-		})
-		return unsubscribe
-	}, [router])
+			if (user) router.push("/dashboard");
+		});
+		return unsubscribe;
+	}, [router]);
 
 	const handleGoogleLogin = async () => {
 		try {
-			await signInWithPopup(auth, provider)
+			await signInWithPopup(auth, provider);
 		} catch (error) {
-			console.error("Erro ao fazer login com Google:", error)
+			console.error("Erro ao fazer login com Google:", error);
 		}
-	}
+	};
 
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
@@ -56,7 +58,18 @@ export default function Home() {
 					Fazer login com Google
 				</button>
 
-				<button className="flex items-center justify-center gap-3 bg-[#5865F2] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#4752c4] transition">
+				<button
+					onClick={() => {
+						const params = new URLSearchParams({
+							client_id: discordClientId,
+							redirect_uri: discordRedirectUri,
+							response_type: "code",
+							scope: "identify email",
+						});
+						window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
+					}}
+					className="flex items-center justify-center gap-3 bg-[#5865F2] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#4752c4] transition"
+				>
 					<Image
 						src="/icons/logo-discord.svg"
 						alt="Discord"
@@ -67,24 +80,9 @@ export default function Home() {
 				</button>
 
 				<button
-					onClick={() => router.push("/login")}
+					onClick={() => router.push("/login/email")}
 					className="border border-neutral-900 flex items-center justify-center gap-3 py-2 px-4 rounded-lg font-semibold hover:bg-black hover:text-white transition"
 				>
-					{/* Ícone */}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className="h-5 w-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M16 12H8m0 0l4-4m-4 4l4 4"
-						/>
-					</svg>
 					Fazer login com E-mail
 				</button>
 			</div>
@@ -100,5 +98,5 @@ export default function Home() {
 				</span>
 			</p>
 		</main>
-	)
+	);
 }

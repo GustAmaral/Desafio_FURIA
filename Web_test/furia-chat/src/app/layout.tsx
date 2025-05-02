@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export const metadata = {
   title: "FURIA Fan Chat",
-  description: "Chat para fãs da FURIA durante os jogos ao vivo",
+  description: "Chat para fãs da FURIA",
 }
 
 export default function RootLayout({

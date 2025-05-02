@@ -21,7 +21,7 @@ export default function NotFoundPage() {
         onClick={() => router.push("/dashboard")}
         className="bg-[#c9b58c] border border-black text-black py-3 px-6 rounded-lg font-bold hover:bg-yellow-600 transition"
       >
-        Voltar ao dashboard
+        Voltar ao início
       </button>
     </main>
   )

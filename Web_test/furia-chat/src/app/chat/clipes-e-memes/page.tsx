@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react"
 import {
     collection,
     addDoc,
@@ -9,47 +9,47 @@ import {
     orderBy,
     serverTimestamp,
     doc, // Importe doc
-} from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
+} from "firebase/firestore"
+import { auth, db } from "@/lib/firebase"
+import { onAuthStateChanged, User } from "firebase/auth"
+import { useRouter, usePathname } from "next/navigation"
+import Image from "next/image"
 
 interface Message {
-    id: string;
-    name: string;
-    text: string;
-    timestamp?: any;
+    id: string
+    name: string
+    text: string
+    timestamp?: any
 }
 
-const CHAT_GERAL_ID = "chat_clipes_e_memes";
+const CHAT_GERAL_ID = "chat_clipes_e_memes"
 
 export default function ChatPage() {
-    const [messages, setMessages] = useState<Message[]>([]);
-    const [input, setInput] = useState("");
-    const [user, setUser] = useState<User | null>(null);
-    const [isHoveringBack, setIsHoveringBack] = useState(false);
-    const [hovered, setHovered] = useState<string | null>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const router = useRouter();
-    const pathname = usePathname();
-    const bottomRef = useRef<HTMLDivElement>(null);
+    const [messages, setMessages] = useState<Message[]>([])
+    const [input, setInput] = useState("")
+    const [user, setUser] = useState<User | null>(null)
+    const [isHoveringBack, setIsHoveringBack] = useState(false)
+    const [hovered, setHovered] = useState<string | null>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
+    const router = useRouter()
+    const pathname = usePathname()
+    const bottomRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) setUser(user);
+            if (user) setUser(user)
             else {
-                alert("É necessário fazer o login antes de prosseguir!");
-                router.push("/");
+                alert("É necessário fazer o login antes de prosseguir!")
+                router.push("/")
             }
-        });
-        return unsubscribe;
-    }, [router]);
+        })
+        return unsubscribe
+    }, [router])
 
     useEffect(() => {
         // Referência à subcoleção de mensagens dentro do documento do chat geral
-        const messagesRef = collection(db, "chats", CHAT_GERAL_ID, "messages");
-        const q = query(messagesRef, orderBy("timestamp"));
+        const messagesRef = collection(db, "chats", CHAT_GERAL_ID, "messages")
+        const q = query(messagesRef, orderBy("timestamp"))
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setMessages(
@@ -57,40 +57,40 @@ export default function ChatPage() {
                     id: doc.id,
                     ...doc.data(),
                 })) as Message[]
-            );
+            )
             setTimeout(() => {
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-            }, 100);
-        });
-        return unsubscribe;
-    }, []);
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+            }, 100)
+        })
+        return unsubscribe
+    }, [])
 
     const handleSend = async () => {
-        const message = input.trim();
-        if (!message || !user) return;
-        setInput("");
+        const message = input.trim()
+        if (!message || !user) return
+        setInput("")
 
         // Referência à subcoleção de mensagens para adicionar o documento
-        const messagesRef = collection(db, "chats", CHAT_GERAL_ID, "messages");
+        const messagesRef = collection(db, "chats", CHAT_GERAL_ID, "messages")
         await addDoc(messagesRef, {
             name: user.displayName ?? "Anônimo",
             text: message,
             timestamp: serverTimestamp(),
-        });
-        inputRef.current?.focus();
-    };
+        })
+        inputRef.current?.focus()
+    }
 
     const handleBackToDashboard = () => {
-        router.push("/dashboard");
-    };
+        router.push("/dashboard")
+    }
 
-    const isActive = (path: string) => pathname === path;
+    const isActive = (path: string) => pathname === path
 
     const getIcon = (base: string, route: string, ext = "png") => {
         if (isActive(route) || hovered === base)
-            return `/icons/${base}_hover.${ext}`;
-        return `/icons/${base}.${ext}`;
-    };
+            return `/icons/${base}_hover.${ext}`
+        return `/icons/${base}.${ext}`
+    }
 
     return (
         <main className="flex flex-col h-screen">
@@ -117,7 +117,7 @@ export default function ChatPage() {
             {/* Mensagens */}
             <section className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-100 text-black">
                 {messages.map((msg) => {
-                    const isCurrentUser = msg.name === user?.displayName;
+                    const isCurrentUser = msg.name === user?.displayName
                     return (
                         <div
                             key={msg.id}
@@ -136,7 +136,7 @@ export default function ChatPage() {
                                 <p className="text-black">{msg.text}</p>
                             </div>
                         </div>
-                    );
+                    )
                 })}
                 <div ref={bottomRef} />
             </section>
@@ -162,5 +162,5 @@ export default function ChatPage() {
                 </div>
             </footer>
         </main>
-    );
+    )
 }

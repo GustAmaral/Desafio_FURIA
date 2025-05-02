@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import React, { useEffect } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { auth, provider } from "@/lib/firebase";
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect } from "react"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { auth, provider } from "@/lib/firebase"
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth"
 
 export default function Home() {
-	const router = useRouter();
-	const discordClientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID!;
-	const discordRedirectUri = process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI!;
+	const router = useRouter()
+	const discordClientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID!
+	const discordRedirectUri = process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI!
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) router.push("/dashboard");
-		});
-		return unsubscribe;
-	}, [router]);
+			if (user) router.push("/dashboard")
+		})
+		return unsubscribe
+	}, [router])
 
 	const handleGoogleLogin = async () => {
 		try {
-			await signInWithPopup(auth, provider);
+			await signInWithPopup(auth, provider)
 		} catch (error) {
-			console.error("Erro ao fazer login com Google:", error);
+			console.error("Erro ao fazer login com Google:", error)
 		}
-	};
+	}
 
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
@@ -65,8 +65,8 @@ export default function Home() {
 							redirect_uri: discordRedirectUri,
 							response_type: "code",
 							scope: "identify email",
-						});
-						window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
+						})
+						window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`
 					}}
 					className="flex items-center justify-center gap-3 bg-[#5865F2] text-white py-2 px-4 rounded-lg font-semibold hover:bg-[#4752c4] transition"
 				>
@@ -98,5 +98,5 @@ export default function Home() {
 				</span>
 			</p>
 		</main>
-	);
+	)
 }

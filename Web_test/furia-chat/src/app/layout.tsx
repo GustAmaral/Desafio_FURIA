@@ -1,5 +1,5 @@
-import "./globals.css";
-import { ReactNode } from "react";
+import "./globals.css"
+import { ReactNode } from "react"
 
 export const metadata = {
   title: "FURIA Fan Chat",
@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="pt-br">
@@ -18,5 +18,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }

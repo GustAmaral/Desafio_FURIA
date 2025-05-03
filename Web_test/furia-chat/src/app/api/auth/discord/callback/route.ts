@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
 		})
 
 		// Redireciona para uma página que faz login com esse custom token
-		const loginUrl = `http://localhost:3000/login/discord?token=${customToken}`
+		const loginUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/login/discord?token=${customToken}`
 		return NextResponse.redirect(loginUrl)
 	} catch (err) {
 		console.error("Erro no callback do Discord:", err)

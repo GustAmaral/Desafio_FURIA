@@ -18,7 +18,7 @@ export default function NotFoundPage() {
       <h1 className="text-2xl font-bold text-black mb-2">Página não encontrada</h1>
       <p className="text-gray-600 mb-6">A página que você está tentando acessar não existe ou foi movida.</p>
       <button
-        onClick={() => router.push("/dashboard")}
+        onClick={() => router.push("/")}
         className="bg-[#c9b58c] border border-black text-black py-3 px-6 rounded-lg font-bold hover:bg-yellow-600 transition"
       >
         Voltar ao início

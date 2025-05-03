@@ -1,9 +1,8 @@
 "use client"
-export const dynamic = "force-dynamic"
 
 import { useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { signInWithCustomToken } from "firebase/auth"
+import { signInWithCustomToken, getIdToken } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 
 export default function DiscordLoginPage() {
@@ -13,7 +12,6 @@ export default function DiscordLoginPage() {
   useEffect(() => {
     const token = searchParams.get("token")
     if (!token) {
-      // Redireciona apenas no cliente
       router.push("/")
       return
     }
@@ -21,9 +19,17 @@ export default function DiscordLoginPage() {
     const login = async () => {
       try {
         await signInWithCustomToken(auth, token)
+        const idToken = await getIdToken(auth.currentUser!, true)
+
+        await fetch("/api/session-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ idToken }),
+        })
+
         router.push("/dashboard")
       } catch (err) {
-        console.error("Erro ao fazer login com token:", err)
+        console.error("Erro no login:", err)
         router.push("/")
       }
     }
@@ -31,6 +37,5 @@ export default function DiscordLoginPage() {
     login()
   }, [router, searchParams])
 
-  // Renderiza algo que não depende de searchParams inicialmente
-  return <p className="text-center mt-10">Processando login com Discord...</p>
+  return <p className="text-center mt-10">Entrando com Discord...</p>
 }

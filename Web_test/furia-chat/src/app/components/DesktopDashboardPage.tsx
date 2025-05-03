@@ -36,22 +36,22 @@ const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({ isMobile, o
                 <div className="flex flex-col gap-4 mr-8 md:w-1/5 max-w-sm">
                     <h2 className="text-xl font-semibold mb-2 md:text-2xl">FURIA x NAVI</h2>
                     <p className="text-sm text-gray-500 md:text-base mb-4">
-                        18:00 - Latest news headline...
+                        18:00 - Últimas noticias sobre...
                     </p>
                     <button
                         className="bg-gray-200 border border-black text-black py-3 rounded-lg font-bold hover:bg-gray-300 transition md:py-4 md:text-lg"
                         onClick={toggleChatSidebar}
                     >
-                        ENTER CHAT ROOM
+                        CHAT ROOM
                     </button>
                     <button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
-                        VIEW PREDICTIONS GAME
+                        PREDIÇÕES DO JOGO
                     </button>
                     <button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
                         WATCH PARTY
                     </button>
                     <button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
-                        LEADERBOARD
+                        TABELA DE CLASSIFICAÇÃO
                     </button>
                 </div>
 

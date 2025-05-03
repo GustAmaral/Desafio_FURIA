@@ -27,16 +27,16 @@ const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({ onLogout, tog
                     className="bg-gray-200 border border-black text-black py-3 rounded-lg font-bold hover:bg-gray-300 transition md:py-4 md:text-lg w-full flex justify-center"
                     onClick={() => router.push("/chat/select")}
                 >
-                    ENTER CHAT ROOM
+                    CHAT ROOM
                 </button>
                 <button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-gray-300 transition w-full flex justify-center">
-                    VIEW PREDICTIONS GAME
+                    PREDIÇÕES DE JOGO
                 </button>
                 <button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-gray-300 transition w-full flex justify-center">
                     WATCH PARTY
                 </button>
                 <button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-gray-300 transition w-full flex justify-center">
-                    LEADERBOARD
+                    TABELA DE CLASSIFICAÇÃO
                 </button>
             </div>
 

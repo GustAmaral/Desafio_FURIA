@@ -12,6 +12,7 @@ export default function DiscordLoginPage() {
   useEffect(() => {
     const token = searchParams.get("token")
     if (!token) {
+      // Redireciona apenas no cliente
       router.push("/")
       return
     }
@@ -29,5 +30,6 @@ export default function DiscordLoginPage() {
     login()
   }, [router, searchParams])
 
-  return <p className="text-center mt-10">Fazendo login com Discord...</p>
+  // Renderiza algo que não depende de searchParams inicialmente
+  return <p className="text-center mt-10">Processando login com Discord...</p>
 }

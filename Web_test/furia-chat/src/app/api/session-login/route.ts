@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getAuth } from "firebase-admin/auth"
-import { initializeApp, getApps } from "firebase-admin/app"
+import { initializeApp, getApps, Credential } from "firebase-admin/app"
+import { credential } from "firebase-admin"
 
 if (!getApps().length) {
   initializeApp({
-    credential: require("firebase-admin").credential.cert(
+    credential: credential.cert(
       JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS!)
     ),
   })

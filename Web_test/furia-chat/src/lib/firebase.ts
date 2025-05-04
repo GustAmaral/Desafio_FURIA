@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyASALnaVhMe-inKFVURKlKUkE710uJf-0k",
   authDomain: "furia-chat-b7729.firebaseapp.com",
   projectId: "furia-chat-b7729",

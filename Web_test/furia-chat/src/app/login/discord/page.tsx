@@ -39,3 +39,4 @@ export default function DiscordLoginPage() {
 
   return <p className="text-center mt-10">Entrando com Discord...</p>
 }
+export const dynamic = "force-dynamic"

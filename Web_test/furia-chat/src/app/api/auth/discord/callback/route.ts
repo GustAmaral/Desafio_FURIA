@@ -1,4 +1,3 @@
-import { auth } from "@/lib/firebase"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req: NextRequest) {
@@ -35,19 +34,43 @@ export async function GET(req: NextRequest) {
     const admin = (await import("firebase-admin")).default
     if (!admin.apps.length) {
       admin.initializeApp({
-        credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS!)),
+        credential: admin.credential.cert(
+          JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS!)
+        ),
       })
     }
 
-    // Gera o custom token com Firebase Admin
     const customToken = await admin.auth().createCustomToken(discordUser.id, {
       name: discordUser.username,
       email: discordUser.email,
     })
 
-    // Redireciona para o frontend passando o custom token
-    const loginUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/login/discord?token=${customToken}`
-    return NextResponse.redirect(loginUrl)
+    const firebase = await import("firebase/app")
+    const { getAuth, signInWithCustomToken } = await import("firebase/auth")
+    const { initializeApp } = firebase
+    const clientApp = initializeApp({
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    })
+
+    const auth = getAuth(clientApp)
+    const userCredential = await signInWithCustomToken(auth, customToken)
+    const idToken = await userCredential.user.getIdToken(true)
+
+    // Criar session cookie
+    const adminAuth = admin.auth()
+    const expiresIn = 60 * 60 * 24 * 7 * 1000
+    const sessionCookie = await adminAuth.createSessionCookie(idToken, { expiresIn })
+
+    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`)
+    response.cookies.set("session", sessionCookie, {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+      maxAge: expiresIn / 1000,
+    })
+
+    return response
   } catch (err) {
     console.error("Erro no callback do Discord:", err)
     return new NextResponse("Erro interno no servidor", { status: 500 })

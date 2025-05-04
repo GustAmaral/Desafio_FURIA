@@ -18,3 +18,15 @@ Ele possui implementação de verificações, caso o usuário tente acessar algu
 - O sistema de apostas
 - Ranking de usuários
 - Configurações de usuário e configurações de aparência da aplicação de acordo com o usuário
+
+## Como utilizar
+
+- Caso tenha uma conta Google, basta clicar em "Fazer login com Google" e seguir os passos para autenticação 
+- Caso queira fazer login via e-mail, mas não possui cadastro no site, clique em Cadastre-se, coloque seu nome (é o nome que aparecerá no chat), email e senha para login.
+- Após realizar o cadastro, basta efetuar o login que você será direcionado ao dashboard.
+- A aplicação possui opções: Chat Room, com 4 opções de chats;
+                             Apostas (não implementado);
+                             Watch party, para assistir aos jogos junto com a comunidade através de um chat exclusivo para transmissões;
+                             Tabela de classificação dos jogos e placar;
+
+- Caso queira fazer logout, basta clicar no ícone vermelho e você será redirecionado para a página inicial

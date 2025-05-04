@@ -24,6 +24,10 @@ export default function LiveStatusDisplay() {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-gray-200">
       <h2 className="text-2xl font-bold text-black">Status da Partida</h2>
+      
+      {/* Linha estilizada: amarela com contorno preto */}
+      <div className="h-2 bg-yellow-500 border-2 border-black rounded-sm" />
+
       <p className="text-lg text-gray-700">
         {status || "Carregando status da partida..."}
       </p>

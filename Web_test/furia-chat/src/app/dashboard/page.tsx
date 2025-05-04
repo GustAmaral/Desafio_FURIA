@@ -1,56 +1,56 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import DesktopDashboardPage from "../components/DesktopDashboardPage";
-import MobileDashboardPage from "../components/MobileDashboardPage";
+import { useEffect, useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import { onAuthStateChanged, signOut, User } from "firebase/auth"
+import { auth } from "@/lib/firebase"
+import DesktopDashboardPage from "../components/DesktopDashboardPage"
+import MobileDashboardPage from "../components/MobileDashboardPage"
 
 export default function DashboardPage() {
-	const router = useRouter();
-	const pathname = usePathname();
-	const [user, setUser] = useState<User | null>(null);
-	const [isLoggingOut, setIsLoggingOut] = useState(false);
-	const [isMobile, setIsMobile] = useState(false);
-	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+	const router = useRouter()
+	const pathname = usePathname()
+	const [user, setUser] = useState<User | null>(null)
+	const [isLoggingOut, setIsLoggingOut] = useState(false)
+	const [isMobile, setIsMobile] = useState(false)
+	const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
 	useEffect(() => {
 		const handleResize = () => {
-			setIsMobile(window.innerWidth < 768);
-		};
+			setIsMobile(window.innerWidth < 768)
+		}
 
-		handleResize();
-		window.addEventListener("resize", handleResize);
+		handleResize()
+		window.addEventListener("resize", handleResize)
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
-				setUser(user);
+				setUser(user)
 			} else {
 				if (!isLoggingOut) {
-					alert("É necessário fazer o login antes de prosseguir!");
+					alert("É necessário fazer o login antes de prosseguir!")
 				}
-				router.push("/");
+				router.push("/")
 			}
-		});
+		})
 		return () => {
-			window.removeEventListener("resize", handleResize);
-			unsubscribe();
-		};
-	}, [router, isLoggingOut]);
+			window.removeEventListener("resize", handleResize)
+			unsubscribe()
+		}
+	}, [router, isLoggingOut])
 
 	const handleLogout = async () => {
-		setIsLoggingOut(true);
-		await signOut(auth);
-		router.push("/");
-	};
+		setIsLoggingOut(true)
+		await signOut(auth)
+		router.push("/")
+	}
 
 	const toggleSettingsMenu = () => {
-		setIsSettingsOpen(!isSettingsOpen);
-	};
+		setIsSettingsOpen(!isSettingsOpen)
+	}
 
 	const isActive = (route: string) => {
-		return pathname === route;
-	};
+		return pathname === route
+	}
 
 	return (
 		<div className="h-screen bg-gray-50">
@@ -65,5 +65,5 @@ export default function DashboardPage() {
 				<DesktopDashboardPage isMobile={isMobile} onLogout={handleLogout} />
 			)}
 		</div>
-	);
+	)
 }

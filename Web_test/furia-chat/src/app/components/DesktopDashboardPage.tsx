@@ -1,35 +1,35 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import SidebarNavigation from "@/app/components/SidebarNavigation";
-import LiveStatusDisplay from "@/app/components/LiveStatus";
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { signOut } from "firebase/auth"
+import { auth } from "@/lib/firebase"
+import SidebarNavigation from "@/app/components/SidebarNavigation"
+import LiveStatusDisplay from "@/app/components/LiveStatus"
 
 interface DesktopDashboardPageProps {
-	isMobile: boolean;
-	onLogout: () => void;
+	isMobile: boolean
+	onLogout: () => void
 }
 
 const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({
 	isMobile,
 	onLogout,
 }) => {
-	const router = useRouter();
-	const [isLoggingOut, setIsLoggingOut] = useState(false);
-	const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false);
+	const router = useRouter()
+	const [isLoggingOut, setIsLoggingOut] = useState(false)
+	const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false)
 	const chatOptions = [
 		{ id: "geral", label: "#geral" },
 		{ id: "pre-jogo", label: "#pré-jogo" },
 		{ id: "pos-jogo", label: "#pós-jogo" },
 		{ id: "clipes-e-memes", label: "#clipes-e-memes" },
-	];
+	]
 
 	const toggleChatSidebar = () => {
-		setIsChatSidebarOpen(!isChatSidebarOpen);
-	};
+		setIsChatSidebarOpen(!isChatSidebarOpen)
+	}
 
 	return (
 		<div className="flex h-screen bg-gray-50">
@@ -58,7 +58,10 @@ const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({
 					>
 						WATCH PARTY
 					</button>
-					<button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition">
+					<button
+						className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition"
+						onClick={() => router.push("/leaderboard")}
+					>
 						TABELA DE CLASSIFICAÇÃO
 					</button>
 				</div>
@@ -73,7 +76,7 @@ const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({
 									<button
 										key={chat.id}
 										onClick={() => router.push(`/chat/${chat.id}`)}
-										className="bg-gray-200 hover:bg-gray-300 border border-black rounded-lg py-3 text-black font-semibold w-full"
+										className="bg-gray-200 hover:bg-yellow-500 border border-black rounded-lg py-3 text-black font-semibold w-full"
 									>
 										{chat.label}
 									</button>
@@ -101,7 +104,7 @@ const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({
 				</div>
 			</main>
 		</div>
-	);
-};
+	)
+}
 
-export default DesktopDashboardPage;
+export default DesktopDashboardPage

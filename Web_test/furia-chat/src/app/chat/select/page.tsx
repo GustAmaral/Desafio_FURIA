@@ -41,7 +41,7 @@ export default function ChatSelection() {
 						<button
 							key={chat.id}
 							onClick={() => router.push(`/chat/${chat.id}`)}
-							className="bg-gray-200 hover:bg-gray-300 border border-black rounded-lg py-3 text-black font-semibold w-full"
+							className="bg-gray-200 hover:bg-yellow-500 border border-black rounded-lg py-3 text-black font-semibold w-full"
 						>
 							{chat.label}
 						</button>

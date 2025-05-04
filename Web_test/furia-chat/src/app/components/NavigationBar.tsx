@@ -17,7 +17,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ isMobile, onLogout }) => 
     const navigationItems = [
         { route: "/dashboard", base: "home", ext: "svg", alt: "Home", label: "Home" },
         { route: "/chat/select", base: "bate_papo", ext: "png", alt: "Chat", label: "Chat" },
-        { route: "/ranking", base: "trofeu", ext: "png", alt: "Ranking", label: "Ranking" },
+        { route: "ranking", base: "trofeu", ext: "png", alt: "Ranking", label: "Ranking" },
         { route: "/settings", base: "config", ext: "svg", alt: "Config", label: "Configurações" },
     ]
 

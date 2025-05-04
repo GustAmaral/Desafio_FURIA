@@ -45,7 +45,10 @@ const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({
 				>
 					WATCH PARTY
 				</button>
-				<button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition w-full flex justify-center">
+				<button
+					className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition w-full flex justify-center"
+					onClick={() => router.push("/leaderboard")}
+				>
 					TABELA DE CLASSIFICAÇÃO
 				</button>
 			</div>

@@ -49,7 +49,12 @@ const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({
 					>
 						CHAT ROOM
 					</button>
-					<button className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition">
+					<button
+						className="bg-gray-200 border border-black text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition"
+						onClick={() => {
+							alert("Em breve!")
+						}}
+					>
 						APOSTAS
 					</button>
 					<button
@@ -99,7 +104,7 @@ const DesktopDashboardPage: React.FC<DesktopDashboardPageProps> = ({
 				)}
 
 				<div className="flex-1 overflow-y-auto">
-					{/* Conteúdo adicional para desktop */}
+					{/* Live status de partidas */}
 					<LiveStatusDisplay />
 				</div>
 			</main>

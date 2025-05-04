@@ -40,7 +40,7 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
 	if (isMobile) return null
 
 	return (
-		<aside className="bg-gray-100 w-16 p-4 flex flex-col items-center gap-6 h-full sticky top-0 relative">
+		<aside className="bg-gray-100 w-16 p-4 flex flex-col items-center gap-6 h-full sticky top-0 ">
 			<h2 className="sr-only">FURIA CHAT</h2>
 			<nav className="flex flex-col gap-4 w-full items-center relative">
 				{navigationItems.map((item) => (

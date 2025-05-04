@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
-import { signOut, onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import LiveStatusDisplay from "@/app/components/LiveStatus";
+import { useEffect, useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import Image from "next/image"
+import { signOut, onAuthStateChanged, User } from "firebase/auth"
+import { auth } from "@/lib/firebase"
+import LiveStatusDisplay from "@/app/components/LiveStatus"
 
 interface MobileDashboardPageProps {
-	onLogout: () => void;
-	toggleSettingsMenu: () => void;
-	isSettingsOpen: boolean;
-	isActive: (route: string) => boolean;
+	onLogout: () => void
+	toggleSettingsMenu: () => void
+	isSettingsOpen: boolean
+	isActive: (route: string) => boolean
 }
 
 const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({
@@ -20,7 +20,7 @@ const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({
 	isSettingsOpen,
 	isActive,
 }) => {
-	const router = useRouter();
+	const router = useRouter()
 
 	return (
 		<div className="flex flex-col h-screen bg-gray-50 items-center p-6">
@@ -61,18 +61,18 @@ const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({
 						ext: "png",
 						alt: "Chat",
 					},
-					{ route: "/ranking", base: "trofeu", ext: "png", alt: "Ranking" },
+					{ route: "ranking", base: "trofeu", ext: "png", alt: "Ranking" },
 					{ base: "config", ext: "svg", alt: "Config" },
 				].map(({ route, base, ext, alt }) => (
 					<div key={base} className="relative">
 						<button
 							onClick={() => {
 								if (route?.startsWith("/")) {
-									router.push(route);
+									router.push(route)
 								} else if (base === "config") {
-									toggleSettingsMenu();
+									toggleSettingsMenu()
 								} else {
-									alert("Coming soon");
+									alert("Em breve!")
 								}
 							}}
 						>
@@ -87,16 +87,36 @@ const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({
 						</button>
 						{base === "config" && isSettingsOpen && (
 							<div className="absolute bottom-full left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-md shadow-md overflow-hidden z-10 mt-2">
-								<button className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100">
+								<button
+									onClick={() => {
+										alert("Em breve!")
+									}}
+									className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100"
+								>
 									Editar Perfil
 								</button>
-								<button className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100">
+								<button
+									onClick={() => {
+										alert("Em breve!")
+									}}
+									className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100"
+								>
 									Dados e Privacidade
 								</button>
-								<button className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100">
+								<button
+									onClick={() => {
+										alert("Em breve!")
+									}}
+									className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100"
+								>
 									Clipes Salvos
 								</button>
-								<button className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100">
+								<button
+									onClick={() => {
+										alert("Em breve!")
+									}}
+									className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100"
+								>
 									Aparência
 								</button>
 								<button
@@ -111,7 +131,7 @@ const MobileDashboardPage: React.FC<MobileDashboardPageProps> = ({
 				))}
 			</nav>
 		</div>
-	);
-};
+	)
+}
 
-export default MobileDashboardPage;
+export default MobileDashboardPage
